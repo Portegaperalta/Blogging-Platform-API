@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Blogging_Platform_API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogging_Platform_API.Data
 {
@@ -7,5 +8,7 @@ namespace Blogging_Platform_API.Data
         public ApplicationDbContext(DbContextOptions options) : base (options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }
