@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Blogging_Platform_API.Validations;
 
 namespace Blogging_Platform_API.Models
 {
@@ -18,6 +19,7 @@ namespace Blogging_Platform_API.Models
         [Required(ErrorMessage ="The field {0} is required")]
         [MaxLength(255,ErrorMessage ="The maximun length for a password is 255 characters")]
         [MinLength(8,ErrorMessage ="Passwords must contain 8 characters or more")]
+        [ContainsUppercase]
         public required string Password { get; set; }
         public List<Post>? Posts { get; set; }
     }
