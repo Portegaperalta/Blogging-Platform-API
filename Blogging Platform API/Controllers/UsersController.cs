@@ -36,5 +36,14 @@ namespace Blogging_Platform_API.Controllers
 
             return user;
         }
+
+        // POST: /user
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody]User user)
+        {
+            context.Add(user);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
