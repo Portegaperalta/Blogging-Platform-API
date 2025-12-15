@@ -22,5 +22,19 @@ namespace Blogging_Platform_API.Controllers
         {
             return await context.Users.ToListAsync();
         }
+
+        //GET: /users/id
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<User>> Get([FromRoute]int id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
     }
 }
