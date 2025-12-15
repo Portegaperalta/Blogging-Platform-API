@@ -45,5 +45,19 @@ namespace Blogging_Platform_API.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+        // PUT: /user/id
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] User user)
+        {
+            if (id != user.Id)
+            {
+                return BadRequest("The user ids must match");
+            }
+
+            context.Update(user);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
