@@ -41,6 +41,19 @@ namespace Blogging_Platform_API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]User user)
         {
+            int usernameRecords = await context.Users.Where(x => x.Name == user.Name).CountAsync();
+            int emailRecords = await context.Users.Where(x => x.Email == user.Email).CountAsync();
+
+            if (usernameRecords > 0)
+            {
+                return BadRequest("The username already in use");
+            }
+
+            if (emailRecords > 0)
+            {
+                return BadRequest("The email is already in use");
+            }
+
             context.Add(user);
             await context.SaveChangesAsync();
             return Ok();
