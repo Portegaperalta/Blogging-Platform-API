@@ -46,12 +46,14 @@ namespace Blogging_Platform_API.Controllers
 
             if (usernameRecords > 0)
             {
-                return BadRequest("The username already in use");
+                ModelState.AddModelError(nameof(user.Name),$"The username {user.Name} already in use");
+                return ValidationProblem();
             }
 
             if (emailRecords > 0)
             {
-                return BadRequest("The email is already in use");
+                ModelState.AddModelError(nameof(user.Email), $"The email ${user.Email} is already in use");
+                return ValidationProblem();
             }
 
             context.Add(user);
