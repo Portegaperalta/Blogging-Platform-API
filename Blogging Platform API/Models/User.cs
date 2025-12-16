@@ -22,6 +22,6 @@ namespace Blogging_Platform_API.Models
         [ContainsUppercase]
         [ContainsSpecialCharacter]
         public required string Password { get; set; }
-        public List<Post>? Posts { get; set; }
+        public List<Post> Posts { get; set; } = new List<Post>();
     }
 }
