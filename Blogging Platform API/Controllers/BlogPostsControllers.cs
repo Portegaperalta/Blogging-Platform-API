@@ -61,5 +61,19 @@ namespace Blogging_Platform_API.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+        //DELETE: /posts/id 
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var deletedRecords = await context.Posts.Where(x => x.Id == id).ExecuteDeleteAsync();
+
+            if (deletedRecords == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
