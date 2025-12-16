@@ -45,7 +45,7 @@ namespace Blogging_Platform_API.Controllers
 
             context.Add(post);
             await context.SaveChangesAsync();
-            return Ok();
+            return Created();
         }
 
         //PUT: /posts/id
