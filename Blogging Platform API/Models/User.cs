@@ -20,6 +20,7 @@ namespace Blogging_Platform_API.Models
         [MaxLength(255,ErrorMessage ="The maximun length for a password is 255 characters")]
         [MinLength(8,ErrorMessage ="Passwords must contain 8 characters or more")]
         [ContainsUppercase]
+        [ContainsSpecialCharacter]
         public required string Password { get; set; }
         public List<Post>? Posts { get; set; }
     }
