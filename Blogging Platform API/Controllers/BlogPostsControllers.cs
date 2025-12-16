@@ -37,5 +37,21 @@ namespace Blogging_Platform_API.Controllers
 
             return post;
         }
+
+        //POST: /posts
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] Post post)
+        {
+            var userExists = await context.Users.AnyAsync(x => x.Id == post.Author.Id);
+
+            if (!userExists)
+            {
+                return BadRequest($"Author id: {post.Author.Id} does not exist.");
+            }
+
+            context.Add(post);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
