@@ -56,7 +56,7 @@ namespace Blogging_Platform_API.Controllers
 
             context.Add(user);
             await context.SaveChangesAsync();
-            return Ok();
+            return Created();
         }
 
         // PUT: /user/id
@@ -84,7 +84,7 @@ namespace Blogging_Platform_API.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return NoContent();
         }
     }
 }
