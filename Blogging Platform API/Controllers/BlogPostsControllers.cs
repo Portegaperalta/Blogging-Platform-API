@@ -1,5 +1,7 @@
 ﻿using Blogging_Platform_API.Data;
+using Blogging_Platform_API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogging_Platform_API.Controllers
 {
@@ -12,6 +14,13 @@ namespace Blogging_Platform_API.Controllers
         public BlogPostsControllers(ApplicationDbContext context)
         {
             this.context = context;
+        }
+
+        //GET : /posts
+        [HttpGet]
+        public async Task<IEnumerable<Post>> Get()
+        {
+            return await context.Posts.ToListAsync();
         }
     }
 }
