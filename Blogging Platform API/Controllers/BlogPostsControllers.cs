@@ -54,7 +54,8 @@ namespace Blogging_Platform_API.Controllers
         {
             if (id != post.Id)
             {
-                return BadRequest("The posts id's must match");
+                ModelState.AddModelError(nameof(post.Id), "The posts id's must match");
+                return ValidationProblem();
             }
 
             context.Update(post);
