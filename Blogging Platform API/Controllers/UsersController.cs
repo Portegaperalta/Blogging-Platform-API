@@ -67,7 +67,8 @@ namespace Blogging_Platform_API.Controllers
         {
             if (id != user.Id)
             {
-                return BadRequest("The user ids must match");
+                ModelState.AddModelError(nameof(user.Id), "The user ids must match");
+                return ValidationProblem();
             }
 
             context.Update(user);
