@@ -1,8 +1,11 @@
-﻿namespace Blogging_Platform_API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blogging_Platform_API.Models
 {
     public class Post
     {
         public int Id { get; set; }
+        [Required]
         public required string Title { get; set; }
         public required string Content { get;set; }
         public string? Category { get; set; }
