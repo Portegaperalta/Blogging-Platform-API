@@ -4,10 +4,10 @@ namespace Blogging_Platform_API.Data.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetUsers();
-        User? GetUserById(int id);
-        void CreateUser(User user);
-        void UpdateUser(User user);
-        void DeleteUser(int id);
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> GetUserByIdAsync(int id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
     }
 }
