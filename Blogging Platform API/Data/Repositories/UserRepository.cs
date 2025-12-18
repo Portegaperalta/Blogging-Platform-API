@@ -39,7 +39,7 @@ namespace Blogging_Platform_API.Data.Repositories
         }
 
         // returns number of times the username is registered in DB
-        public async Task<int> GetUsernameRecordsAsync(int id,User user)
+        public async Task<int> GetUsernameRecordsAsync(User user)
         {
             return await _context.Users.Where(x => x.Name == user.Name).CountAsync();
         }
