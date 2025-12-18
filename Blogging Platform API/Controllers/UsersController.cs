@@ -1,5 +1,6 @@
 ﻿using Blogging_Platform_API.Data;
 using Blogging_Platform_API.Models;
+using Blogging_Platform_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,55 +10,40 @@ namespace Blogging_Platform_API.Controllers
     [Route("/users")]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IUserService _userService;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(IUserService userService)
         {
-            this.context = context;
+            _userService = userService;
         }
 
         //GET: /users
         [HttpGet]
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await context.Users.ToListAsync();
+            var users = await _userService.GetUsersAsync();
+            return Ok(users);
         }
 
         //GET: /users/id
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<User>> Get([FromRoute]int id)
+        public async Task<IActionResult> Get([FromRoute]int id)
         {
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userService.GetUserByIdAsync(id);
 
             if (user is null)
             {
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
         // POST: /user
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]User user)
         {
-            int usernameRecords = await context.Users.Where(x => x.Name == user.Name).CountAsync();
-            int emailRecords = await context.Users.Where(x => x.Email == user.Email).CountAsync();
-
-            if (usernameRecords > 0)
-            {
-                ModelState.AddModelError(nameof(user.Name),$"The username {user.Name} already in use");
-                return ValidationProblem();
-            }
-
-            if (emailRecords > 0)
-            {
-                ModelState.AddModelError(nameof(user.Email), $"The email ${user.Email} is already in use");
-                return ValidationProblem();
-            }
-
-            context.Add(user);
-            await context.SaveChangesAsync();
+            await _userService.CreateUserAsync(user);
             return Created();
         }
 
@@ -65,14 +51,8 @@ namespace Blogging_Platform_API.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put([FromRoute]int id, [FromBody] User user)
         {
-            if (id != user.Id)
-            {
-                ModelState.AddModelError(nameof(user.Id), "The user ids must match");
-                return ValidationProblem();
-            }
 
-            context.Update(user);
-            await context.SaveChangesAsync();
+            await _userService.UpdateUserAsync(id, user);
             return Ok();
         }
 
@@ -80,13 +60,7 @@ namespace Blogging_Platform_API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var recordsDeleted = await context.Users.Where(x => x.Id == id).ExecuteDeleteAsync();
-
-            if (recordsDeleted == 0)
-            {
-                return NotFound();
-            }
-
+            await _userService.DeleteUserAsync(id);
             return NoContent();
         }
     }
