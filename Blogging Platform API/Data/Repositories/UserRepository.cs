@@ -43,5 +43,11 @@ namespace Blogging_Platform_API.Data.Repositories
         {
             return await _context.Users.Where(x => x.Name == user.Name).CountAsync();
         }
+
+        // returns number of times the email is registered in DB
+        public async Task<int> GetEmailRecordsAsync(User user)
+        {
+            return await _context.Users.Where(x => x.Email == user.Email).CountAsync();
+        }
     }
 }
