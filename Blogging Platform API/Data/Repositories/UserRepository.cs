@@ -33,9 +33,9 @@ namespace Blogging_Platform_API.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task<int> DeleteUserAsync(int id)
         {
-           await _context.Users.Where(x => x.Id == id).ExecuteDeleteAsync();
+           return await _context.Users.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
 
         // returns number of times the username is registered in DB

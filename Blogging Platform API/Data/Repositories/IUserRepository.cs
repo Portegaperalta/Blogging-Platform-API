@@ -8,7 +8,7 @@ namespace Blogging_Platform_API.Data.Repositories
         Task<User?> GetUserByIdAsync(int id);
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int id);
+        Task<int> DeleteUserAsync(int id);
         Task<int> GetUsernameRecordsAsync(User user);
         Task<int> GetEmailRecordsAsync(User user);
     }

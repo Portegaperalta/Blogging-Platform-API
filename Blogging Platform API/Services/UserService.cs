@@ -50,9 +50,10 @@ namespace Blogging_Platform_API.Services
             await _userRepository.UpdateUserAsync(user);
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task<int> DeleteUserAsync(int id)
         {
-            await _userRepository.DeleteUserAsync(id);
+            var deletedRecords = await _userRepository.DeleteUserAsync(id);
+            return deletedRecords;
         }
     }
 }
