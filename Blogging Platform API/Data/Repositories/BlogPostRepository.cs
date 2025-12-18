@@ -34,9 +34,9 @@ namespace Blogging_Platform_API.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBlogPostAsync(int id)
+        public async Task<int> DeleteBlogPostAsync(int id)
         {
-            await _context.Posts.Where(x => x.Id == id).ExecuteDeleteAsync();
+            return await _context.Posts.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
     }
 }
