@@ -24,6 +24,13 @@ namespace Blogging_Platform_API.Services
 
         public async Task CreateUserAsync(User user)
         {
+            int usernameRecords = await _userRepository.GetUsernameRecordsAsync(user);
+
+            if (usernameRecords  > 0)
+            {
+                throw new ArgumentException("This username already exists");
+            }
+
             await _userRepository.CreateUserAsync(user);
         }
 
