@@ -8,6 +8,6 @@ namespace Blogging_Platform_API.Data.Repositories
         Task<Post?> GetBlogPostByIdAsync(int id);
         Task CreateBlogPostAsync(Post post);
         Task UpdateBlogPostAsync(Post post);
-        Task DeleteBlogPostAsync(int id);
+        Task<int> DeleteBlogPostAsync(int id);
     }
 }
