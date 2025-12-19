@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Blogging_Platform_API.Data;
 using Blogging_Platform_API.Data.Repositories;
+using Blogging_Platform_API.Middleware;
 using Blogging_Platform_API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,15 +23,7 @@ var app = builder.Build();
 
 // Middlewares Area
 
-app.Use(async (context, next) =>
-{
-    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-    logger.LogInformation($"Request: {context.Request.Method} {context.Request.Path}");
-    
-    await next.Invoke();
-    
-    logger.LogInformation($"Reponse: {context.Response.StatusCode}");
-});
+app.UseLogRequest();
 
 app.MapControllers();
 
