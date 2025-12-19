@@ -6,6 +6,7 @@ namespace Blogging_Platform_API.Data.Repositories
     {
         Task<IEnumerable<Post>> GetBlogPostsAsync();
         Task<Post?> GetBlogPostByIdAsync(int id);
+        Task<IEnumerable<Post>> GetBlogPostsBySearchAsync(string searchTerm);
         Task CreateBlogPostAsync(Post post);
         Task UpdateBlogPostAsync(Post post);
         Task<int> DeleteBlogPostAsync(int id);
