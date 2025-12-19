@@ -36,6 +36,13 @@ namespace Blogging_Platform_API.Controllers
             return post;
         }
 
+        //GET: /posts/search?
+        [HttpGet("search")]
+        public async Task<IEnumerable<Post>> Get([FromQuery] string searchTerm)
+        {
+            return await _blogPostService.GetBlogPostsBySearchAsync(searchTerm);
+        }
+
         //POST: /posts
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Post post)
