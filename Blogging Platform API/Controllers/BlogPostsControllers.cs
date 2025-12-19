@@ -1,5 +1,6 @@
 ﻿using Blogging_Platform_API.Data;
 using Blogging_Platform_API.Models;
+using Blogging_Platform_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,26 +10,25 @@ namespace Blogging_Platform_API.Controllers
     [Route("/posts")]
     public class BlogPostsControllers : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IBlogPostService _blogPostService;
 
-        public BlogPostsControllers(ApplicationDbContext context)
+        public BlogPostsControllers(IBlogPostService blogPostService)
         {
-            this.context = context;
+            _blogPostService = blogPostService;
         }
 
         //GET: /posts
         [HttpGet]
         public async Task<IEnumerable<Post>> Get()
         {
-            return await context.Posts.ToListAsync();
+            return await _blogPostService.GetBlogPostsAsync();
         }
 
         //GET: /posts/id
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Post>> Get([FromRoute]int id)
         {
-            var post = await context.Posts.
-                       FirstOrDefaultAsync(x => x.Id == id);
+            var post = await _blogPostService.GetBlogPostByIdAsync(id);
 
             if (post is null)
             {
@@ -43,8 +43,7 @@ namespace Blogging_Platform_API.Controllers
         public async Task<ActionResult> Post([FromBody] Post post)
         {
 
-            context.Add(post);
-            await context.SaveChangesAsync();
+            await _blogPostService.CreateBlogPostAsync(post);
             return Created();
         }
 
@@ -52,14 +51,7 @@ namespace Blogging_Platform_API.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Post post)
         {
-            if (id != post.Id)
-            {
-                ModelState.AddModelError(nameof(post.Id), "The posts id's must match");
-                return ValidationProblem();
-            }
-
-            context.Update(post);
-            await context.SaveChangesAsync();
+            await _blogPostService.UpdateBlogPostAsync(id, post);
             return Ok();
         }
 
@@ -67,7 +59,7 @@ namespace Blogging_Platform_API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var deletedRecords = await context.Posts.Where(x => x.Id == id).ExecuteDeleteAsync();
+            var deletedRecords = await _blogPostService.DeleteBlogPostAsync(id);
 
             if (deletedRecords == 0)
             {
