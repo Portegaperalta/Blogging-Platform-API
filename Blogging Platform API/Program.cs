@@ -13,6 +13,8 @@ ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("name=DefaultConnection"));
 
 var app = builder.Build();
