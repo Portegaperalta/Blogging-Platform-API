@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Services Area
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 options.JsonSerializerOptions.ReferenceHandler =
 ReferenceHandler.IgnoreCycles);
@@ -20,6 +21,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 var app = builder.Build();
 
 // Middlewares Area
+
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    logger.LogInformation($"Request: {context.Request.Method} {context.Request.Path}");
+    
+    await next.Invoke();
+    
+    logger.LogInformation($"Reponse: {context.Response.StatusCode}");
+});
+
 app.MapControllers();
 
 app.Run();
