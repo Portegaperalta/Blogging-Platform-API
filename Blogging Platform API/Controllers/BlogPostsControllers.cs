@@ -1,8 +1,6 @@
-﻿using Blogging_Platform_API.Data;
-using Blogging_Platform_API.Models;
+﻿using Blogging_Platform_API.Models;
 using Blogging_Platform_API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Blogging_Platform_API.Controllers
 {
