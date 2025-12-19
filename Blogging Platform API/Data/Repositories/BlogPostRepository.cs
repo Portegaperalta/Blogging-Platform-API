@@ -22,6 +22,11 @@ namespace Blogging_Platform_API.Data.Repositories
             return await _context.Posts.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<IEnumerable<Post>> GetBlogPostsBySearchAsync(string searchTerm)
+        {
+            return await _context.Posts.Where(x => x.Title.Contains(searchTerm)).ToListAsync();
+        }
+
         public async Task CreateBlogPostAsync(Post post)
         {
             await _context.AddAsync(post);
