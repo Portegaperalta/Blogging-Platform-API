@@ -6,6 +6,7 @@ namespace Blogging_Platform_API.Services
     {
         Task<IEnumerable<Post>> GetBlogPostsAsync();
         Task<Post?> GetBlogPostByIdAsync(int id);
+        Task<IEnumerable<Post>> GetBlogPostsBySearchAsync(string searchTerm);
         Task CreateBlogPostAsync(Post post);
         Task UpdateBlogPostAsync(int id,Post post);
         Task<int> DeleteBlogPostAsync(int id);

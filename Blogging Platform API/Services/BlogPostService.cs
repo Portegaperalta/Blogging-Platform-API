@@ -23,6 +23,11 @@ namespace Blogging_Platform_API.Services
             return blogPost;
         }
 
+        public async Task<IEnumerable<Post>> GetBlogPostsBySearchAsync(string searchTerm)
+        {
+            return await _blogPostRepository.GetBlogPostsBySearchAsync(searchTerm);
+        }
+
         public async Task CreateBlogPostAsync(Post post)
         {
             await _blogPostRepository.CreateBlogPostAsync(post);
